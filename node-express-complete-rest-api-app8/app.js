@@ -33,3 +33,8 @@ app.post('/flights/create', (req, res) => {
 
   res.status(result.status).send(result.message);
 });
+
+//Handlers for PUT requests:
+app.get('/flights/:id', (req, res) => {
+  res.send();
+});

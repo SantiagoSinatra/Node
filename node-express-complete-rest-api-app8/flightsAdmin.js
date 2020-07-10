@@ -30,8 +30,9 @@ class FlightsAdmin {
   }
 
   showFlight(id) {
-    const flight = this.flights.find(f => f.id === parseInt(id)); //find the flight with the String parsed to Int id by comparing it to the flights id of the array.
     
+    const flight = this.searchFlight(id); // Search for a specific flight via the id using the function defined below.
+
     const res = { // Create an object that will be the response of this method.
       status: '',
       message: ''
@@ -39,12 +40,14 @@ class FlightsAdmin {
 
     if(!flight) { // Check if the flight exists in the array.
 
+      // Respond with an error message and a not found status.
       res.status = 404;
       res.message = "We are sorry but your flight doesn't seem to exist. Please try again later."
 
       return res;
     } else {
 
+      // Respond with the flight in the message and an ok status.
       res.status = 200;
       res.message = flight;
 
@@ -93,8 +96,33 @@ class FlightsAdmin {
     }
   }
 
+  modifyFlight(id, airline, destination, departure, departureTime, arrivalTime) {
+    const flight = this.searchFlight(id); // Search for the flight to modify using the function below.
+    const res = {
+      status: '',
+      message: ''
+    }
+
+    if(!flight) {
+      res.status = 404
+      res.message = 'The flight you selected to change does not exist. Please try again later.'
+    } else {
+      const validatedFlight = this.validateFlight(flight);
+      if(this.validateFlight.error) {
+        res.status = 400,
+        res.message = validatedFlight.error.details[0].message;
+      }
+
+    }
+  }
+
+  searchFlight(id){
+    return this.flights.find(f => f.id === parseInt(id)); //find the flight with the String parsed to Int id by comparing it to the flights id of the array.
+  }
+
   validateFlight(flight) { // Method that validates the flight using Joi library.
     const schema = {
+      id: Joi.number().integer(),
       airline: Joi.string().min(5).required(),
       destination: Joi.string().min(5).required(),
       departure: Joi.string().min(5).required(),
