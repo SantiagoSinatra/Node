@@ -35,6 +35,17 @@ app.post('/flights/create', (req, res) => {
 });
 
 //Handlers for PUT requests:
-app.get('/flights/:id', (req, res) => {
-  res.send();
+app.put('/flights/:id', (req, res) => {
+  // Use the modifyFlight function to search and modify the requested array and save the value returned in a constant.
+  const result = flightsAdmin.modifyFlight(req.params.id, req.body.airline, req.body.destination, req.body.departure, req.body.departureTime, req.body.arrivalTime);
+  
+  res.status(result.status).send(result.message);
+});
+
+//Handlers for DELETE requests:
+app.delete('/flights/:id', (req, res) => {
+
+  const result = flightsAdmin.deleteFlight(req.params.id);
+
+  res.status(result.status).send(result.message);
 });

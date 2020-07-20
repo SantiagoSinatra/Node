@@ -106,13 +106,55 @@ class FlightsAdmin {
     if(!flight) {
       res.status = 404
       res.message = 'The flight you selected to change does not exist. Please try again later.'
+
+      return res;
     } else {
-      const validatedFlight = this.validateFlight(flight);
-      if(this.validateFlight.error) {
+      // create a new flight to validate user input using the already created function.
+      const userFlightInput = { id: id, airline: airline, destination: destination, departure: departure, departureTime: departureTime, arrivalTime: arrivalTime}
+
+      const validation = this.validateFlight(userFlightInput);
+      if(validation.error) {
         res.status = 400,
-        res.message = validatedFlight.error.details[0].message;
+        res.message = validation.error.details[0].message;
+
+        return res;
+      } else {
+        // Modify the flight properties.
+        flight.airline = airline;
+        flight.destination = destination;
+        flight.departure = departure;
+        flight.departureTime = departureTime;
+        flight.arrivalTime = arrivalTime;
+
+        res.status = 200;
+        res.message = flight;
+        
+        return res;
       }
 
+    }
+  }
+
+  deleteFlight(id){
+    const flight = this.searchFlight(id);
+    const res = {
+      status: '',
+      message: ''
+    }
+
+    if(!flight) {
+      res.status = 404;
+      res.message = 'The flight you selected to delete does not exist. Please try again later.';
+
+      return res;
+    } else {
+      const flightToDelete = this.flights.indexOf(flight);
+      this.flights.splice(flightToDelete, 1);
+
+      res.status = 200;
+      res.message = flight;
+
+      return res;
     }
   }
 
