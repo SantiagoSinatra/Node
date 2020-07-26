@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 //CONNECT TO DB
-mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true}, () => console.log('connected to DB!')); //Atlas db connection using Mongoose.
+mongoose.connect(process.env.DB_CONNECTION, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, () => console.log('connected to DB!')); //Atlas db connection using Mongoose.
 
 //LISTENING TO THE SERVER
 app.listen(3000);
