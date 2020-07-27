@@ -9,6 +9,10 @@ https://www.youtube.com/watch?v=TlB_eWDSMt4
   
 Dev Ed:  
 https://www.youtube.com/watch?v=vjf774RKrLc
+
+freeCodeCamp.org:
+https://www.youtube.com/watch?v=7CqJlxBYj-M
+
 ## Interesting stuff on this repo
 - Check out App8, its an airline flights manager API built with Express.js and Joi. Basically it lets you Create, Read, Update and Delete information from a 'database' of fake airlines.
 - node-express-mongo-rest-api-app is a research CRUD app woriking with Atlas MongoDB and Mongoose.
